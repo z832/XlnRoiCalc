@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunariumCoin ROI Calculator</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+
+    <div id="header">
+        <img src="lunarium_logo.png" />
+        <h1>LunariumCoin ROI Calculator</h1>
+    </div>
+
+    <div class="container">
+
+        <div>
+            <div id="input" class="block">
+                <h2>Input</h2>
+                <form id="input-form" action="">
+                    <div>
+                        <label for="input-block">Block:</label>
+                        <input id="input-block" type="number">
+                    </div>
+                    <div>Collateral:<span id="output-collateral"></span></div>
+                    <div>Masternode Rewards:<span id="output-rewards-mn"></span></div>
+                    <div>POS Rewards:<span id="output-rewards-pos"></span></div>
+                    <div>
+                        <label for="input-current-mn">Current Network Masternodes:</label>
+                        <input id="input-current-mn" type="number">
+                    </div>
+                    <div>
+                        <label for="input-current-hashrate">Current Network Hash Rate:</label>
+                        <input id="input-current-hashrate" type="number"> GH/s
+                    </div>
+                    <div>
+                        <label for="input-investment">Investment:</label>
+                        <input id="input-investment" type="number">
+                    </div>
+                    <div>
+                        <label for="input-add">Add investment to current network totals?</label>
+                        <input id="input-add" type="checkbox" checked>
+                    </div>
+                </form>
+            </div>
+            <div id="reward-schedule" class="block">
+                <h2>Reward Schedule</h2>
+                <table>
+                    <thead>
+                            <tr>
+                                <th colspan="2">Duration</th>
+                                <th rowspan="2">Masternode Collateral</th>
+                                <th colspan="3">Rewards</th>
+                            </tr>
+                            <tr>
+                                <th>Block Start</th>
+                                <th>Block End</th>
+                                <th>Total</th>
+                                <th>Masternode</th>
+                                <th>POS</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="output" class="block">
+            <h2>Estimated Rewards</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <th>Masternodes Only</th>
+                        <th>Staking Only</th>
+                        <th>Masternodes + Staking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="section-header">
+                        <th scope="row">Masternodes</th>
+                        <td id="output-mn-masternodes">0</td>
+                        <td id="output-pos-masternodes">-</td>
+                        <td>
+                            <span id="output-both-masternodes">0</span>
+                            <button id="input-both-masternodes-minus">-</button>
+                            <button id="input-both-masternodes-plus">+</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Network Total Masternodes</th>
+                        <td id="output-mn-totalmasternodes">0</td>
+                        <td id="output-pos-totalmasternodes">0</td>
+                        <td id="output-both-totalmasternodes">0</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Average Time to Reward</th>
+                        <td id="output-mn-mnreward-time">-</td>
+                        <td id="output-pos-mnreward-time">-</td>
+                        <td id="output-both-mnreward-time">-</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="output-title">Masternode Rewards</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Daily</th>
+                        <td id="output-mn-mnreward-daily">0 XLN</td>
+                        <td id="output-pos-mnreward-daily">-</td>
+                        <td id="output-both-mnreward-daily">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Monthly</th>
+                        <td id="output-mn-mnreward-monthly">0 XLN</td>
+                        <td id="output-pos-mnreward-monthly">-</td>
+                        <td id="output-both-mnreward-monthly">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yearly</th>
+                        <td id="output-mn-mnreward-yearly">0 XLN</td>
+                        <td id="output-pos-mnreward-yearly">-</td>
+                        <td id="output-both-mnreward-yearly">0 XLN</td>
+                    </tr>
+                    <tr class="section-header">
+                        <th scope="row">Staking Balance</th>
+                        <td id="output-mn-staking-balance">-</td>
+                        <td id="output-pos-staking-balance">0 XLN</td>
+                        <td id="output-both-staking-balance">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Wallet Hashrate</th>
+                        <td id="output-mn-wallet-hashrate">-</td>
+                        <td id="output-pos-wallet-hashrate">0 H/s</td>
+                        <td id="output-both-wallet-hashrate">0 H/s</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Network Total Hashrate</th>
+                        <td id="output-mn-network-hashrate">0 H/s</td>
+                        <td id="output-pos-network-hashrate">0 H/s</td>
+                        <td id="output-both-network-hashrate">0 H/s</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Average Time to Reward</th>
+                        <td id="output-mn-posreward-time">-</td>
+                        <td id="output-pos-posreward-time">-</td>
+                        <td id="output-both-posreward-time">-</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="output-title">POS Rewards</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Daily</th>
+                        <td id="output-mn-posreward-daily">-</td>
+                        <td id="output-pos-posreward-daily">0 XLN</td>
+                        <td id="output-both-posreward-daily">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Monthly</th>
+                        <td id="output-mn-posreward-monthly">-</td>
+                        <td id="output-pos-posreward-monthly">0 XLN</td>
+                        <td id="output-both-posreward-monthly">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yearly</th>
+                        <td id="output-mn-posreward-yearly">-</td>
+                        <td id="output-pos-posreward-yearly">0 XLN</td>
+                        <td id="output-both-posreward-yearly">0 XLN</td>
+                    </tr>
+                    <tr class="section-header">
+                        <th scope="row" class="output-title">Total Rewards</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Daily</th>
+                        <td id="output-mn-totalreward-daily">0 XLN</td>
+                        <td id="output-pos-totalreward-daily">0 XLN</td>
+                        <td id="output-both-totalreward-daily">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Monthly</th>
+                        <td id="output-mn-totalreward-monthly">0 XLN</td>
+                        <td id="output-pos-totalreward-monthly">0 XLN</td>
+                        <td id="output-both-totalreward-monthly">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yearly</th>
+                        <td id="output-mn-totalreward-yearly">0 XLN</td>
+                        <td id="output-pos-totalreward-yearly">0 XLN</td>
+                        <td id="output-both-totalreward-yearly">0 XLN</td>
+                    </tr>
+                    <tr class="section-header">
+                        <th scope="row" class="output-title">ROI</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Daily</th>
+                        <td id="output-mn-roi-daily">0 XLN</td>
+                        <td id="output-pos-roi-daily">0 XLN</td>
+                        <td id="output-both-roi-daily">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Monthly</th>
+                        <td id="output-mn-roi-monthly">0 XLN</td>
+                        <td id="output-pos-roi-monthly">0 XLN</td>
+                        <td id="output-both-roi-monthly">0 XLN</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yearly</th>
+                        <td id="output-mn-roi-yearly">0 XLN</td>
+                        <td id="output-pos-roi-yearly">0 XLN</td>
+                        <td id="output-both-roi-yearly">0 XLN</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
